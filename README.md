@@ -1,4 +1,4 @@
-# i_am_rich
+# Google Maps API Integration, Flutter Project
 
 A new Flutter application.
 
