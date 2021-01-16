@@ -8,7 +8,7 @@
 
         <!-- GMAPS API KEY HERE -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBAGkENOfZO9CyGifV09FwqH-2kPNgLIOo"/>
+            android:value=""/>
 
         <activity
             android:name=".MainActivity"
