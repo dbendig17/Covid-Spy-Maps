@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mapsIntegration">
+    package="com.example.i_am_rich">
 
     <application
         android:name="io.flutter.app.FlutterApplication"
@@ -8,7 +8,7 @@
 
         <!-- GMAPS API KEY HERE -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBAGkENOfZO9CyGifV09FwqH-2kPNgLIOo"/>
+            android:value="AIzaSyBFwE7ilZfcbouzwN0FJhk6pK_wDNStcmQ"/>
 
         <activity
             android:name="com.example.mapsIntegration.MainActivity"

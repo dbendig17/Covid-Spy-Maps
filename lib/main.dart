@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 //TODO: add icon type property(dependent on risk type)
@@ -13,68 +15,146 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var riskDescriptions = {1 :'Large Group: ', 2 :'No Masks', 3 : 'Other: '};
   //list of temp markers for user choice
   List <Marker> myMarker = [];
   //list of all created markers
   List <Marker> allMarkers = [];
   //marker properties
   var markerCount = 0;
-  var descriptionInput = 'example description';
   //int from 1-5
-  var severity = 1;
-  var riskHours = '4pm';
-  var riskDays = 'January 16th';
-  //
-  var riskType = 1;
+  int severity = 1;
+  var button = false;
+
+  String sevInput = '';
+  String descriptionInput = '';
+  String riskTime = '';
+
+  createAlert(BuildContext context) {
+    TextEditingController rangeControl = TextEditingController();
+    TextEditingController descControl = TextEditingController();
+    TextEditingController timeControl = TextEditingController();
+
+    return showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Text('Report Information'),
+        content: Form(
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: rangeControl,
+                decoration: const InputDecoration(
+                  hintText: 'Risk Range',
+                ),
+              ),
+              TextFormField(
+                controller: descControl,
+                decoration: const InputDecoration(
+                  hintText: 'Description',
+                ),
+              ),
+              TextFormField(
+                controller: timeControl,
+                decoration: const InputDecoration(
+                  hintText: 'Time reported',
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          MaterialButton(
+            elevation: 10.0,
+            child: Text('Select location'),
+            onPressed: (){
+              setState(() {
+                sevInput = rangeControl.text;
+                descriptionInput = descControl.text;
+                riskTime = timeControl.text;
+                severity = int.parse(sevInput);
+                print('INPUT');
+                print(sevInput);
+                print(descriptionInput);
+                print(riskTime);
+                Navigator.of(context).pop();
+              });
+            },
+          )
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
+          title: Text('Covid Spy'),
+          backgroundColor: Colors.lightBlueAccent,
         ),
-        body: GoogleMap(
-          mapType: MapType.hybrid,
-          initialCameraPosition: CameraPosition(
-            target: const LatLng(40, -74),
-            zoom: 6,
-          ),
-          markers: Set.from(allMarkers),
-          onTap: _handleTap,
-        ),
+        body:
+         Stack(
+           children: [
+             GoogleMap(
+               mapType: MapType.hybrid,
+               initialCameraPosition: CameraPosition(
+                 target: const LatLng(40.7128, -74.0060),
+                 zoom: 13,
+               ),
+               markers: Set.from(_setMarkers()),
+               onTap: _handleTap,
+             ),
+             FloatingActionButton(onPressed: () {
+               createAlert(context);
+               button = true;
+               print('button val: ' + button.toString());
+             },
+               elevation: 50,
+               child: Icon(Icons.add),
+             ),
+           ],
+         )
       )
     );
+  }
+
+  _setMarkers() {
+    if(button){
+      myMarker = [];
+      return myMarker;
+    } else {
+      return allMarkers;
+    }
   }
 
   _handleTap(LatLng tappedPoint) {
     markerCount += 1;
     var markerHue = _setHueColor();
-    var risk = riskDescriptions[riskType];
-    var description = riskHours + ' on ' + riskDays + ' : ' + descriptionInput;
+    var description = riskTime + ' : ' + descriptionInput;
     LatLng pos = tappedPoint;
-    print(pos);
-    setState(() {
-      myMarker = [];
-      Marker curPin = Marker(
-        markerId: MarkerId(markerCount.toString()),
-        draggable: true,
-        onDragEnd: (dragEndPosition) {
-          pos = dragEndPosition;
-          print(pos);
-        },
-        infoWindow: InfoWindow(
-          title: risk,
-          snippet: description,
-        ),
-        position: pos,
-        icon: markerHue,
-      );
-      myMarker.add(curPin);
-      allMarkers.add(curPin);
-    });
+    if(button){
+      print(pos);
+      setState(() {
+        myMarker = [];
+        Marker curPin = Marker(
+          markerId: MarkerId(markerCount.toString()),
+          draggable: true,
+          onDragEnd: (dragEndPosition) {
+            pos = dragEndPosition;
+            print(pos);
+          },
+          infoWindow: InfoWindow(
+            title: 'Severity : ' + sevInput,
+            snippet: description,
+          ),
+          position: pos,
+          icon: markerHue,
+        );
+        allMarkers.add(curPin);
+        button = false;
+        print('button val: ' + button.toString());
+      });
+    }
   }
 
   _setHueColor() {
