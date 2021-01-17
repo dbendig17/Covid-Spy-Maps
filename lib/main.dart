@@ -71,10 +71,14 @@ class _MyAppState extends State<MyApp> {
 
   _setHueColor() {
     if(severity == 1) {
-      return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow);
+      return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue);
     } else if (severity == 2) {
-      return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange);
+      return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
     } else if (severity == 3) {
+      return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow);
+    } else if (severity == 4) {
+      return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange);
+    } else if (severity == 5) {
       return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed);
     }
   }
