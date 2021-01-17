@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:i_am_rich/locations.dart';
-//import 'locations.dart' as locations;
 
 void main() {
   runApp(MyApp());
@@ -48,7 +46,6 @@ class _MyAppState extends State<MyApp> {
   _handleTap(LatLng tappedPoint) {
     markerCount += 1;
     var markerHue = _setHueColor();
-    //markerHue = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue);
     LatLng pos = tappedPoint;
     print(pos);
     setState(() {

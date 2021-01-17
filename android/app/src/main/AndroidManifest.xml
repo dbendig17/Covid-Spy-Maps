@@ -1,17 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.i_am_rich">
+    package="com.example.mapsIntegration">
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="i_am_rich"
+        android:label="mapsIntegration"
         android:icon="@mipmap/ic_launcher">
 
         <!-- GMAPS API KEY HERE -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value=""/>
+            android:value="AIzaSyBAGkENOfZO9CyGifV09FwqH-2kPNgLIOo"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.mapsIntegration.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
